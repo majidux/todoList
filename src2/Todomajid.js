@@ -54,19 +54,6 @@ export default class TodoList extends Component {
         );
     };
     
-    componentDidMount() {
-        Keyboard.addListener(
-            isAndroid ? "keyboardDidShow" : "keyboardWillShow",
-            e => this.setState({ viewPadding: e.endCoordinates.height + viewPadding })
-        );
-        
-        Keyboard.addListener(
-            isAndroid ? "keyboardDidHide" : "keyboardWillHide",
-            () => this.setState({ viewPadding: viewPadding })
-        );
-        
-        Tasks.all(tasks => this.setState({ tasks: tasks || [] }));
-    }
     
     render() {
         return (
