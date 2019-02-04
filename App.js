@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Todomajid from "./src2/Todomajid";
+import Todomajid from "./src/Home";
 
 
 export default class App extends Component<Props> {
