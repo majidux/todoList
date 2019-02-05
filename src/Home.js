@@ -1,28 +1,31 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import {
     StyleSheet,
     Text,
     View,
     FlatList,
     AsyncStorage,
-    Button,
     TextInput,
-    Keyboard,
-    Platform
+    TouchableOpacity
 } from "react-native";
 
-const isAndroid = Platform.OS == "android";
-const viewPadding = 10;
 
 export default class TodoList extends Component {
-    state = {
-        tasks: [],
-        text: ""
+    
+    constructor(props){
+        super(props);
+        this.state={
+            tasks:[],
+            text:''
+        }
+    }
+    
+    
+    textInput = text => {
+        this.setState({text: text});
     };
     
-    changeTextHandler = text => {
-        this.setState({ text: text });
-    };
+    
     
     addTask = () => {
         let notEmpty = this.state.text.trim().length > 0;
@@ -30,9 +33,9 @@ export default class TodoList extends Component {
         if (notEmpty) {
             this.setState(
                 prevState => {
-                    let { tasks, text } = prevState;
+                    let {tasks, text} = prevState;
                     return {
-                        tasks: tasks.concat({ key: tasks.length, text: text }),
+                        tasks: tasks.concat({key: tasks.length, text: text}),
                         text: ""
                     };
                 },
@@ -41,14 +44,14 @@ export default class TodoList extends Component {
         }
     };
     
+    
+    
     deleteTask = i => {
-        this.setState(
-            prevState => {
-                let tasks = prevState.tasks.slice();
+        this.setState(prevState => {
+            let tasks = prevState.tasks.slice();
+            tasks.splice(i, 1);
                 
-                tasks.splice(i, 1);
-                
-                return { tasks: tasks };
+                return {tasks: tasks};
             },
             () => Tasks.save(this.state.tasks)
         );
@@ -58,25 +61,29 @@ export default class TodoList extends Component {
     render() {
         return (
             <View
-                style={[styles.container, { paddingBottom: this.state.viewPadding }]}
+                style={styles.container}
             >
                 <FlatList
                     style={styles.list}
                     data={this.state.tasks}
-                    renderItem={({ item, index }) =>
+                    renderItem={({item, index}) =>
                         <View>
-                            <View style={styles.listItemCont}>
+                            <View style={styles.listItemContent}>
                                 <Text style={styles.listItem}>
                                     {item.text}
                                 </Text>
-                                <Button title="Delete" onPress={() => this.deleteTask(index)} />
+                                <View style={styles.deleteButton}>
+                                    <TouchableOpacity
+                                        onPress={() => this.deleteTask(index)}><Text style={{color:'#fff'}}>Delete</Text></TouchableOpacity>
+                                </View>
                             </View>
-                            <View style={styles.hr} />
-                        </View>}
+                            <View style={styles.hr}/>
+                        </View>
+                    }
                 />
                 <TextInput
                     style={styles.textInput}
-                    onChangeText={this.changeTextHandler}
+                    onChangeText={this.textInput}
                     onSubmitEditing={this.addTask}
                     value={this.state.text}
                     placeholder="Add Tasks"
@@ -89,18 +96,21 @@ export default class TodoList extends Component {
 }
 
 let Tasks = {
-    convertToArrayOfObject(tasks, callback) {
-        return callback(
-            tasks ? tasks.split("||").map((task, i) => ({ key: i, text: task })) : []
-        );
-    },
+    
+    // convertToArrayOfObject(tasks, callback) {
+    //     return callback(
+    //         tasks ? tasks.split("||").map((task, i) => ({key: i, text: task})) : []
+    //     );
+    // },
+    
+    // all(callback) {
+    //     return AsyncStorage.getItem("TASKS", (err, tasks) =>
+    //         this.convertToArrayOfObject(tasks, callback)
+    //     );
+    // },
+    
     convertToStringWithSeparators(tasks) {
         return tasks.map(task => task.text).join("||");
-    },
-    all(callback) {
-        return AsyncStorage.getItem("TASKS", (err, tasks) =>
-            this.convertToArrayOfObject(tasks, callback)
-        );
     },
     save(tasks) {
         AsyncStorage.setItem("TASKS", this.convertToStringWithSeparators(tasks));
@@ -113,7 +123,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#F5FCFF",
-        padding: viewPadding,
         paddingTop: 20
     },
     list: {
@@ -128,7 +137,7 @@ const styles = StyleSheet.create({
         height: 1,
         backgroundColor: "gray"
     },
-    listItemCont: {
+    listItemContent: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
@@ -138,7 +147,12 @@ const styles = StyleSheet.create({
         paddingRight: 10,
         paddingLeft: 10,
         borderColor: "gray",
-        borderWidth: isAndroid ? 0 : 1,
-        width: "100%"
+        borderWidth: 1,
+        width: "100%",
+        backgroundColor:'#e9e9e9'
+    },
+    deleteButton:{
+        backgroundColor:'#5776ff',
+        padding: 8
     }
 });
