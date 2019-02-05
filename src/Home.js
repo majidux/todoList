@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 
-export default class TodoList extends Component {
+export default class Home extends Component {
     
     constructor(props){
         super(props);
