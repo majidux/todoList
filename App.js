@@ -1,15 +1,14 @@
-
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-import Home from "./src/Home";
+import Todomajid from "./src/Home";
 
 
 export default class App extends Component<Props> {
   render() {
     return (
-      <View style={styles.container}>
-        <Home/>
-      </View>
+        <View style={styles.container}>
+          <Todomajid/>
+        </View>
     );
   }
 }
