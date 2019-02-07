@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
 // import Home from "./src/Home";
-import AppRedux from "./roocketRedux/components/AppRedux";
-import TodoListSimple from "./todoListSimple/TodoListSimple";
+// import AppRedux from "./roocketRedux/components/AppRedux";
+// import TodoListSimple from "./todoListSimple/TodoListSimple";
+import Home from "./todoRedux/Pages/Home";
 
 
 export default class App extends Component<Props> {
@@ -11,7 +12,8 @@ export default class App extends Component<Props> {
         <View style={styles.container}>
           {/*<Home/>*/}
           {/*<AppRedux/>*/}
-          <TodoListSimple/>
+          {/*<TodoListSimple/>*/}
+          <Home/>
         </View>
     );
   }
