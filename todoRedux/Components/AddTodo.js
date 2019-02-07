@@ -14,11 +14,11 @@ export default class AddTodo extends Component {
     addText = (text) => this.setState({text: text});
     addTextItem = () => {
         let textItem = this.state.textItems;
-        if(this.state.textItems.length<0){
+        if(this.state.text.length===0){
             return;
         }
         else{
-            this.setState({textItems: [...textItem, this.state.text],text:''});
+            this.setState({textItems: [...textItem, this.state.text]},this.setState({text:''}));
         }
     };
     
@@ -26,7 +26,7 @@ export default class AddTodo extends Component {
         return (
             <View style={styles.className}>
                 <View style={styles.textArea}>
-                    <TextInput onChangeText={this.addText} placeholder={'Write something'}/>
+                    <TextInput value={this.state.text} onChangeText={this.addText} placeholder={'Write something'}/>
                 </View>
                 
                 <TouchableOpacity style={styles.addButtonStyle} onPress={this.addTextItem}>
@@ -34,19 +34,7 @@ export default class AddTodo extends Component {
                         <Text>ADD</Text>
                     </View>
                 </TouchableOpacity>
-                {
-                    console.warn(this.state.textItems)
-                }
                 
-                <View style={styles.itemsMap}>
-                    {
-                        this.state.textItems.map((item, i) =>
-                            <View style={{flex:1}} key={i}>
-                                <Text>{item}</Text>
-                            </View>
-                        )
-                    }
-                </View>
             </View>
         );
     }
@@ -59,10 +47,6 @@ const styles = StyleSheet.create({
     },
     addButtonStyle: {
         backgroundColor: 'pink',
-        flex: 1,
-    },
-    itemsMap: {
-        backgroundColor: 'skyblue',
         flex: 1,
     },
     textArea: {
