@@ -1,4 +1,4 @@
-import {ADD_TEXT} from '../type';
+import {ADD_TEXT, DELETE_TEXT} from '../type';
 import initialStates from '../initialStates';
 
 
@@ -8,8 +8,15 @@ const reducer = (state = initialStates , action) => {
             return{
                 ...state,
                 textItems:[
-                    ...state.textItems, action.payload
+                    ...state.textItems, action.text
                 ]
+            };
+        case DELETE_TEXT:
+            return{
+                textItems : [
+                    ...state.textItems.splice(0 ,action.index),
+                    ...state.textItems.splice(action.index + 1),
+                ] ,
             };
         default:
             return state;
