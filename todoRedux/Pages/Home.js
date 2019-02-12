@@ -7,7 +7,7 @@ import {createStore} from "redux";
 import reducer from '../services/reducers/reducer';
 export const store = createStore(reducer);
 
-export default class Home extends Component {
+class Home extends Component {
     
     render() {
         return (
@@ -23,3 +23,5 @@ const styles = StyleSheet.create({
         flex: 1,
     }
 });
+
+export default Home;

@@ -1,24 +1,29 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image, TextInput, TouchableOpacity} from 'react-native';
+import {connect} from "react-redux";
+import {setText} from "../services/actions/action";
 
-export default class AddTodo extends Component {
+class AddTodo extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
             text: '',
-            textItems: []
+            // textItems: []
         }
     }
     
     addText = (text) => this.setState({text: text});
     addTextItem = () => {
-        let textItem = this.state.textItems;
+        // let textItem = this.state.textItems;
         if(this.state.text.length===0){
             return;
         }
         else{
-            this.setState({textItems: [...textItem, this.state.text]},this.setState({text:''}));
+            // console.warn(this.state.text);
+            // this.setState({textItems: [...textItem, this.state.text]},this.setState({text:''}));
+            this.props.setText(this.state.text);
+            this.setState({text:''})
         }
     };
     
@@ -26,10 +31,10 @@ export default class AddTodo extends Component {
         return (
             <View style={styles.className}>
                 <View style={styles.textArea}>
-                    <TextInput value={this.state.text} onChangeText={this.addText} placeholder={'Write something'}/>
+                    <TextInput value={this.state.text} onChangeText={this.addText.bind(this)} placeholder={'Write something'}/>
                 </View>
                 
-                <TouchableOpacity style={styles.addButtonStyle} onPress={this.addTextItem}>
+                <TouchableOpacity style={styles.addButtonStyle} onPress={this.addTextItem.bind(this)}>
                     <View>
                         <Text>ADD</Text>
                     </View>
@@ -54,3 +59,11 @@ const styles = StyleSheet.create({
         flex: 1
     }
 });
+
+const mapStateToProps = state => {
+    return {
+        allItems: state.textItems
+    }
+};
+
+export default connect(mapStateToProps,{setText})(AddTodo);

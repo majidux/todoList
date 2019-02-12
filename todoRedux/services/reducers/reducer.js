@@ -3,18 +3,16 @@ import initialStates from '../initialStates';
 
 
 const reducer = (state = initialStates , action) => {
-      switch (action.type) {
-          case ADD_TEXT :
-              return{
-                  ...state,
-                  items:[
-                      ...state.items,
-                      {
-                          text:action.text,
-                          payload:action.text
-                      }
-                  ]
-              }
-      }
+    switch (action.type) {
+        case ADD_TEXT :
+            return{
+                ...state,
+                textItems:[
+                    ...state.textItems, action.payload
+                ]
+            };
+        default:
+            return state;
+    }
 };
 export default reducer;

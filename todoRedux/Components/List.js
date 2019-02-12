@@ -7,7 +7,7 @@ class List extends Component {
         return (
             <View style={styles.itemsMap}>
                 {
-                    this.props.textItems.map((item, i) =>
+                    this.props.allItems.map((item, i) =>
                         <View key={i}>
                             <Text>{item}</Text>
                         </View>
@@ -35,4 +35,4 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(List)(mapStateToProps);
+export default connect(mapStateToProps)(List);

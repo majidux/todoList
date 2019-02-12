@@ -1,8 +1,11 @@
 import {ADD_TEXT} from '../type';
 
-export const addText = text =>{
+const addTextRedux = text =>{
     return{
         type:ADD_TEXT,
         payload:text,
     }
 };
+export const  setText = text => {
+    return addTextRedux(text);
+} ;
