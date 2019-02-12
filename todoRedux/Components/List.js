@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import {connect} from 'react-redux';
+
 class List extends Component {
     render() {
         return (
             <View style={styles.itemsMap}>
                 {
-                    this.props.allItems.map((item, i) =>
+                    this.props.textItems.map((item, i) =>
                         <View key={i}>
                             <Text>{item}</Text>
                         </View>
@@ -16,6 +17,7 @@ class List extends Component {
         );
     }
 }
+
 const styles = StyleSheet.create({
     className: {
         flex: 1,
@@ -24,12 +26,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'skyblue',
         flex: 1,
     },
-
+    
 });
 
-const mapStateToProps = state =>{
-    return{
-        allItems:state.items
+const mapStateToProps = state => {
+    return {
+        allItems: state.textItems
     }
 };
 
